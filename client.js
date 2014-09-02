@@ -20,6 +20,7 @@ charm.cursor(false)
 browser.on('serviceUp', function(service) {
   var client = net.connect(service.port, service.host)
   client.pipe(split()).on('data', function (chunk) {
+    if (!chunk) return;
     var obj = JSON.parse(chunk)
 
     if (obj.type === 'tomato') {
@@ -33,6 +34,13 @@ browser.on('serviceUp', function(service) {
         .left(5)
         .write(format(obj.countdown))
     }
+  })
+
+  client.on('close', function () {
+    charm
+      .foreground('yellow')
+      .right(1)
+      .write('Catch up ketchup!\n')
   })
 })
 

@@ -1,4 +1,6 @@
-var client = require('net').connect(1999)
+var mdns = require('mdns')
+  , browser = mdns.createBrowser(mdns.tcp('tomatotomato'))
+  , net = require('net')
 
   , charm = require('charm')()
   , split = require('split')
@@ -15,18 +17,23 @@ charm.pipe(process.stdout)
 
 charm.cursor(false)
 
-client.pipe(split()).on('data', function (chunk) {
-  var obj = JSON.parse(chunk)
+browser.on('serviceUp', function(service) {
+  var client = net.connect(service.port, service.host)
+  client.pipe(split()).on('data', function (chunk) {
+    var obj = JSON.parse(chunk)
 
-  if (obj.type === 'tomato') {
-    charm
-      .foreground('red')
-      .left(5)
-      .write(format(obj.countdown))
-  } else {
-    charm
-      .foreground('green')
-      .left(5)
-      .write(format(obj.countdown))
-  }
+    if (obj.type === 'tomato') {
+      charm
+        .foreground('red')
+        .left(5)
+        .write(format(obj.countdown))
+    } else {
+      charm
+        .foreground('green')
+        .left(5)
+        .write(format(obj.countdown))
+    }
+  })
 })
+
+browser.start()

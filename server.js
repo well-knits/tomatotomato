@@ -1,4 +1,5 @@
 var EventEmitter = require('events').EventEmitter
+  , mdns = require('mdns')
   , tomatoLength = 25 * 60
   , pauseLength = 5 * 60
 
@@ -32,10 +33,11 @@ var EventEmitter = require('events').EventEmitter
               , 1000
             )
       }
+    , server
 
 emitter.setMaxListeners(Infinity)
 
-require('net').createServer(function (connection) {
+server = require('net').createServer(function (connection) {
   var onTomato = function (countdown) {
         connection.write(JSON.stringify({ type: 'tomato', countdown: countdown }) + '\n')
       }
@@ -55,7 +57,10 @@ require('net').createServer(function (connection) {
   connection.once('end', cleanup)
   connection.once('error', cleanup)
 
-}).listen(1999)
+}).listen(function () {
+  var ad = mdns.createAdvertisement(mdns.tcp('tomatotomato'), server.address().port)
+  ad.start()
+})
 
 tomato()
 require('./client')

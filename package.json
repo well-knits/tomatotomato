@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "charm": "^0.2.0",
+    "mdns": "^2.2.0",
     "split": "^0.3.0"
   }
 }

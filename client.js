@@ -1,4 +1,6 @@
 var mdns = require('mdns')
+  , Notification = require('node-notifier')
+  , notifier = new Notification()
   , browser = mdns.createBrowser(mdns.tcp('tomatotomato'))
   , net = require('net')
 
@@ -27,11 +29,15 @@ browser.on('serviceUp', function(service) {
         .foreground('red')
         .left(5)
         .write(format(obj.countdown))
+      if (obj.countdown === 0)
+        notifier.notify({ message: 'Let\'s relax for a while!'})
     } else {
       charm
         .foreground('green')
         .left(5)
         .write(format(obj.countdown))
+      if (obj.countdown === 0)
+        notifier.notify({ message: 'Come on! Let\'s work!'})
     }
   })
 })

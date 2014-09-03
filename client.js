@@ -32,6 +32,8 @@ var fs = require('fs')
 
       logStream.write(data)
     }
+    // find out if this file was included from the server or not
+  , isRemote = module.parent ? module.parent.filename === __dirname + '/server.js' : false
 
 charm.pipe(process.stdout)
 
@@ -46,6 +48,7 @@ browser.on('serviceUp', function(service) {
           , type: obj.type
           , countdown: obj.countdown
           , timestamp: (new Date()).toJSON()
+          , remote: isRemote
         })
       }
 

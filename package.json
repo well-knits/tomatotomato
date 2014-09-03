@@ -5,6 +5,7 @@
   "scripts": {},
   "bin": {
     "tomatotomato-client": "client.js",
+    "tomatotomato-http": "http.js",
     "tomatotomato-log": "get-log.js",
     "tomatotomato-server": "server.js"
   },

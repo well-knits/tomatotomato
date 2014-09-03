@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var EventEmitter = require('events').EventEmitter
   , mdns = require('mdns')
   , tomatoLength = 25 * 60

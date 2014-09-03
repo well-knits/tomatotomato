@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var mdns = require('mdns')
   , Notification = require('node-notifier')
   , notifier = new Notification()

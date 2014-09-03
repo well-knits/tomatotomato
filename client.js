@@ -40,8 +40,10 @@ var fs = require('fs')
 
       logStream.write(data)
     }
-    // Assume that if we include this from another file, it's not remote
-  , isRemote = !module.parent
+  , normalizeHostname = function (hostString) {
+      return hostString.slice(0, hostString.indexOf('.')).toLowerCase()
+    }
+  , myHostname = normalizeHostname(require('os').hostname())
 
 charm.pipe(process.stdout)
 
@@ -49,6 +51,7 @@ charm.cursor(false)
 
 browser.on('serviceUp', function(service) {
   var client = net.connect(service.port, service.host)
+    , isRemote = myHostname !== normalizeHostname(service.host)
     , log = function (obj) {
         write({
             port: service.port

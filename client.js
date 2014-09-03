@@ -32,8 +32,8 @@ var fs = require('fs')
 
       logStream.write(data)
     }
-    // find out if this file was included from the server or not
-  , isRemote = module.parent ? module.parent.filename === __dirname + '/server.js' : false
+    // Assume that if we include this from another file, it's not remote
+  , isRemote = !module.parent
 
 charm.pipe(process.stdout)
 

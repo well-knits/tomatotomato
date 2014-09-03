@@ -16,7 +16,7 @@ npm install tomatotomato -g
 
 ## Run
 
-Run `tomatotomato-server` to start a new tomato session. A session runs for 25 minutes and then breaks for 5 minutes before starting again. A `tomatotomato-server` is also a `tomatotomato-client`. Make sure that there's only one server running simultaniously, otherwise weird things will happen.
+Run `tomatotomato-server` to start a new tomato session. A session runs for 25 minutes and then breaks for 5 minutes before starting again. Make sure that there's only one server running simultaniously, otherwise weird things will happen.
 
 Run `tomatotomato-client` to start listening for and joining tomato sessions on your local network. You need someone on your local network to be the server for this to work.
 

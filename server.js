@@ -65,4 +65,3 @@ server = require('net').createServer(function (connection) {
 })
 
 tomato()
-require('./client')

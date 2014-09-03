@@ -2,6 +2,8 @@
 
 [Pomodoro](http://en.wikipedia.org/wiki/Pomodoro_Technique). But distributed. And awesome.
 
+Distributed in this case means that multiple people can follow the same pomodoro clock automagically on the same network, using [mdns](http://npmjs.org/package/mdns).
+
 [![NPM](https://nodei.co/npm/tomatotomato.png?downloads&stars)](https://nodei.co/npm/tomatotomato/)
 
 [![NPM](https://nodei.co/npm-dl/tomatotomato.png)](https://nodei.co/npm/tomatotomato/)
@@ -14,9 +16,9 @@ npm install tomatotomato -g
 
 ## Run
 
-Run 'tomatotomato-server' to start a new tomato session. A session runs for 25 minutes and then breaks for 5 minutes before starting again.
+Run `tomatotomato-server` to start a new tomato session. A session runs for 25 minutes and then breaks for 5 minutes before starting again. A `tomatotomato-server` is also a `tomatotomato-client`. Make sure that there's only one server running simultaniously, otherwise weird things will happen.
 
-Run 'tomatotomato-client' to start listening for and joining tomato sessions on your network.
+Run `tomatotomato-client` to start listening for and joining tomato sessions on your local network. You need someone on your local network to be the server for this to work.
 
 
 ## Licence

@@ -67,11 +67,11 @@ browser.on('serviceUp', function(service) {
     if (obj.type === 'tomato') {
       singleLineOutput('red', format(obj.countdown))
       if (obj.countdown === 0)
-        notifier.notify({ message: 'Let\'s relax for a while!'})
+        notifier.notify({ message: 'Let\'s relax for a while!', sound: 'Glass'})
     } else {
       singleLineOutput('green', format(obj.countdown))
       if (obj.countdown === 0)
-        notifier.notify({ message: 'Come on! Let\'s work!'})
+        notifier.notify({ message: 'Come on! Let\'s work!', sound: 'Glass'})
     }
     log(obj)
   })

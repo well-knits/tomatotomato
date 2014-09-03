@@ -5,6 +5,7 @@
   "scripts": {},
   "bin": {
     "tomatotomato-client": "client.js",
+    "tomatotomato-log": "get-log.js",
     "tomatotomato-server": "server.js"
   },
   "author": "David Björklund <david.bjorklund@gmail.com> (http://davidbjorklund.com/)",

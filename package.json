@@ -2,11 +2,7 @@
   "name": "tomatotomato",
   "version": "1.0.1",
   "description": "Pomodoro. But distributed. And awesome.",
-  "main": "client.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
+  "scripts": {},
   "bin": {
     "tomatotomato-client": "client.js",
     "tomatotomato-server": "server.js"

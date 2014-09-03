@@ -1,13 +1,21 @@
 #!/usr/bin/env node
 
 var fs = require('fs')
+  , net = require('net')
+  , path = require('path')
+
   , mdns = require('mdns')
   , Notification = require('node-notifier')
   , notifier = new Notification()
   , browser = mdns.createBrowser(mdns.tcp('tomatotomato'))
-  , net = require('net')
 
-  , logStream = fs.createWriteStream(__dirname + '/LOG', { flags: 'a' })
+  , logStream = (function() {
+      var dir = path.join(process.env.HOME, '.tomatotomato')
+
+      require('mkdirp').sync(dir)
+
+      return fs.createWriteStream(path.join(dir, 'LOG'), { flags: 'a' })
+    })()
 
   , charm = require('charm')()
   , split = require('split')

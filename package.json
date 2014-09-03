@@ -1,6 +1,6 @@
 {
   "name": "tomatotomato",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Pomodoro. But distributed. And awesome.",
   "scripts": {},
   "bin": {

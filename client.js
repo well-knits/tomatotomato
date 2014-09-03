@@ -15,6 +15,14 @@ var mdns = require('mdns')
       return minutes + ':' + seconds
     }
 
+  , singleLineOutput = function (color, string) {
+    charm
+      .foreground(color)
+      .erase('start')
+      .left(20)
+      .write(string)
+  }
+
 charm.pipe(process.stdout)
 
 charm.cursor(false)
@@ -22,23 +30,22 @@ charm.cursor(false)
 browser.on('serviceUp', function(service) {
   var client = net.connect(service.port, service.host)
   client.pipe(split()).on('data', function (chunk) {
+    if (!chunk) return;
     var obj = JSON.parse(chunk)
 
     if (obj.type === 'tomato') {
-      charm
-        .foreground('red')
-        .left(5)
-        .write(format(obj.countdown))
+      singleLineOutput('red', format(obj.countdown))
       if (obj.countdown === 0)
         notifier.notify({ message: 'Let\'s relax for a while!'})
     } else {
-      charm
-        .foreground('green')
-        .left(5)
-        .write(format(obj.countdown))
+      singleLineOutput('green', format(obj.countdown))
       if (obj.countdown === 0)
         notifier.notify({ message: 'Come on! Let\'s work!'})
     }
+  })
+
+  client.on('close', function () {
+    singleLineOutput('yellow', 'Catch up ketchup!')
   })
 })
 

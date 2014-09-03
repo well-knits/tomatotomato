@@ -23,9 +23,9 @@ var fs = require('fs')
   , singleLineOutput = function (color, string) {
       charm
         .foreground(color)
-        .erase('start')
-        .left(20)
+        .erase('line')
         .write(string)
+        .left(string.length)
     }
   , write = function (json) {
       var data = JSON.stringify(json) + '\n'
@@ -72,5 +72,7 @@ browser.on('serviceUp', function(service) {
     singleLineOutput('yellow', 'Catch up ketchup!')
   })
 })
+
+singleLineOutput('yellow', 'I have not yet connected with my master')
 
 browser.start()

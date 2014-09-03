@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
-var mdns = require('mdns')
+var fs = require('fs')
+  , mdns = require('mdns')
   , Notification = require('node-notifier')
   , notifier = new Notification()
   , browser = mdns.createBrowser(mdns.tcp('tomatotomato'))
   , net = require('net')
+
+  , logStream = fs.createWriteStream(__dirname + '/LOG', { flags: 'a' })
 
   , charm = require('charm')()
   , split = require('split')
@@ -18,12 +21,17 @@ var mdns = require('mdns')
     }
 
   , singleLineOutput = function (color, string) {
-    charm
-      .foreground(color)
-      .erase('start')
-      .left(20)
-      .write(string)
-  }
+      charm
+        .foreground(color)
+        .erase('start')
+        .left(20)
+        .write(string)
+    }
+  , write = function (json) {
+      var data = JSON.stringify(json) + '\n'
+
+      logStream.write(data)
+    }
 
 charm.pipe(process.stdout)
 
@@ -31,6 +39,16 @@ charm.cursor(false)
 
 browser.on('serviceUp', function(service) {
   var client = net.connect(service.port, service.host)
+    , log = function (obj) {
+        write({
+            port: service.port
+          , host: service.host
+          , type: obj.type
+          , countdown: obj.countdown
+          , timestamp: (new Date()).toJSON()
+        })
+      }
+
   client.pipe(split()).on('data', function (chunk) {
     if (!chunk) return;
     var obj = JSON.parse(chunk)
@@ -44,6 +62,7 @@ browser.on('serviceUp', function(service) {
       if (obj.countdown === 0)
         notifier.notify({ message: 'Come on! Let\'s work!'})
     }
+    log(obj)
   })
 
   client.on('close', function () {

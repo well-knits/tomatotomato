@@ -68,6 +68,8 @@ browser.on('serviceUp', function(service) {
     log(obj)
   })
 
+  client.on('error', function (err) {})
+
   client.on('close', function () {
     singleLineOutput('yellow', 'Catch up ketchup!')
   })

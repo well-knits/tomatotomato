@@ -5,7 +5,6 @@ var format = require('./format')
   , connection = require('./connect')()
 
   , WebSocketServer = require('ws').Server
-  , websocket = require('websocket-stream')
   , serveBrowserify = require('serve-browserify')({
        root: __dirname + '/public'
    })
@@ -25,9 +24,8 @@ var format = require('./format')
   , wss = new WebSocketServer({ server: server })
 
 wss.on('connection', function(ws) {
-  var stream = websocket(ws)
   connection.on('data', function (obj) {
     obj.countdown = format(obj.countdown);
-    stream.write(JSON.stringify(obj))
+    ws.send(JSON.stringify(obj))
   })
 })

@@ -24,8 +24,15 @@ var format = require('./format')
   , wss = new WebSocketServer({ server: server })
 
 wss.on('connection', function(ws) {
-  connection.on('data', function (obj) {
-    obj.countdown = format(obj.countdown);
-    ws.send(JSON.stringify(obj))
+  var ondata = function (obj) {
+        obj.countdown = format(obj.countdown);
+        ws.send(JSON.stringify(obj))
+      },
+      onclose = function () {
+        ws.send(JSON.stringify({ type: 'close' }));
+      }
+
+  connection.on('data', ondata)
+  connection.on('close', onclose)
   })
 })

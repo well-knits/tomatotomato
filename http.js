@@ -34,5 +34,8 @@ wss.on('connection', function(ws) {
 
   connection.on('data', ondata)
   connection.on('close', onclose)
+  ws.on('close', function () {
+    connection.removeListener('data', ondata)
+    connection.removeListener('close', onclose)
   })
 })

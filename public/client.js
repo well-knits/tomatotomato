@@ -1,35 +1,25 @@
-var elm = document.getElementById('countdown')
+var reconnect = require('simple-reconnect-ws')
+  , elm = document.getElementById('countdown')
 
-  , connect = function () {
-      var socket = new WebSocket('ws://' + window.location.host)
-        , onmessage = function (event) {
-            var obj = JSON.parse(event.data)
+  , onmessage = function (event) {
+      console.log(arguments)
 
-            if (obj.type === 'pause') {
-              elm.style.color = 'green'
-              elm.innerHTML = obj.countdown;
-            } else if (obj.type === 'tomato') {
-              elm.style.color = 'red'
-              elm.innerHTML = obj.countdown;
-            } else if (obj.type === 'close') {
-              elm.style.color = 'yellow'
-              elm.innerHTML = 'Catch up ketchup!'
-            }
-          }
-        , reconnect = function () {
-            elm.style.color = 'yellow'
-            elm.innerHTML = 'Catch up ketchup!'
+      var obj = JSON.parse(event.data)
 
-            socket.removeEventListener('message', onmessage)
-            socket.removeEventListener('error', reconnect)
-            socket.removeEventListener('close', reconnect)
-
-            setTimeout(connect, 300)
-          }
-
-      socket.addEventListener('error', reconnect)
-      socket.addEventListener('close', reconnect)
-      socket.addEventListener('message', onmessage)
+      if (obj.type === 'pause') {
+        elm.style.color = 'green'
+        elm.innerHTML = obj.countdown;
+      } else if (obj.type === 'tomato') {
+        elm.style.color = 'red'
+        elm.innerHTML = obj.countdown;
+      } else if (obj.type === 'close') {
+        elm.style.color = 'yellow'
+        elm.innerHTML = 'Catch up ketchup!'
+      }
+    }
+  , onreconnect = function () {
+      elm.style.color = 'yellow'
+      elm.innerHTML = 'Catch up ketchup!'
     }
 
-connect()
+reconnect('ws://' + window.location.host, onmessage, onreconnect)

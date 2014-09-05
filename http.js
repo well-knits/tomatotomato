@@ -25,8 +25,8 @@ var format = require('./format')
 
 wss.on('connection', function(ws) {
   var ondata = function (obj) {
-        obj.countdown = format(obj.countdown);
-        ws.send(JSON.stringify(obj))
+        var data = { countdown: format(obj.countdown), type: obj.type }
+        ws.send(JSON.stringify(data))
       },
       onclose = function () {
         ws.send(JSON.stringify({ type: 'close' }));

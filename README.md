@@ -20,6 +20,8 @@ Run `tomatotomato-server` to start a new tomato session. A session runs for 25 m
 
 Run `tomatotomato-client` to start listening for and joining tomato sessions on your local network. You need someone on your local network to be the server for this to work.
 
+Run `tomatotomato-http` to start a client that's a http-server. You need someone on your local network to be the server for this to work.
+
 Run `tomatotomato-log` to get a stream of all the events that has happened. The format is line delimited JSON.
 
 ## Licence

@@ -2,8 +2,6 @@ var reconnect = require('simple-reconnect-ws')
   , elm = document.getElementById('countdown')
 
   , onmessage = function (event) {
-      console.log(arguments)
-
       var obj = JSON.parse(event.data)
 
       if (obj.type === 'pause') {

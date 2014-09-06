@@ -3,6 +3,7 @@
 var fs = require('fs')
   , http = require('http')
 
+  , networkAddress = require('network-address')
   , serveBrowserify = require('serve-browserify')({
       root: __dirname + '/public'
     })
@@ -21,7 +22,9 @@ var fs = require('fs')
           res.end(html)
         })
       }
-    }).listen(2929)
+    }).listen(2929, function () {
+      console.log('network-http running on http://%s:2929', networkAddress())
+    })
 
 ws.createServer({ server: server }, function (socket) {
   var send = function (data) { socket.send(JSON.stringify(data)) }

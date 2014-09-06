@@ -13,7 +13,7 @@ var EventEmitter = require('events').EventEmitter
                 function () {
                   var countdown = tomatoLength - Math.round((Date.now() - start) / 1000)
                   emitter.emit('tomato', countdown)
-                  if (countdown === 0) {
+                  if (countdown <= 0) {
                     clearInterval(interval)
                     pause()
                   }
@@ -27,7 +27,7 @@ var EventEmitter = require('events').EventEmitter
                 function () {
                   var countdown = pauseLength - Math.round((Date.now() - start) / 1000)
                   emitter.emit('pause', countdown)
-                  if (countdown === 0) {
+                  if (countdown <= 0) {
                     clearInterval(interval)
                     tomato()
                   }

@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 
 var EventEmitter = require('events').EventEmitter
+
+
+  , chalk = require('chalk')
   , mdns = require('mdns')
+  , networkAddress = require('network-address')
+
   , tomatoLength = 25 * 60
   , pauseLength = 5 * 60
 
@@ -40,18 +45,22 @@ var EventEmitter = require('events').EventEmitter
 emitter.setMaxListeners(Infinity)
 
 server = require('net').createServer(function (connection) {
-  var onTomato = function (countdown) {
+  var remoteAddress = connection.remoteAddress
+    , onTomato = function (countdown) {
         connection.write(JSON.stringify({ type: 'tomato', countdown: countdown }) + '\n')
       }
     , onPause = function (countdown) {
         connection.write(JSON.stringify({ type: 'pause', countdown: countdown }) + '\n')
       }
     , cleanup = function () {
+        console.log(chalk.red('Client disconnected ' + remoteAddress))
         emitter.removeListener('tomato', onTomato)
         emitter.removeListener('pause', onPause)
         connection.removeListener('end', cleanup)
         connection.removeListener('error', cleanup)
       }
+
+  console.log(chalk.green('Client connected ' + remoteAddress))
 
   emitter.on('tomato', onTomato)
   emitter.on('pause', onPause)
@@ -61,6 +70,8 @@ server = require('net').createServer(function (connection) {
 
 }).listen(function () {
   var ad = mdns.createAdvertisement(mdns.tcp('tomatotomato'), server.address().port)
+    , msg = 'server running on ' + networkAddress() + ':' + server.address().port
+  console.log(chalk.blue(msg))
   ad.start()
 })
 

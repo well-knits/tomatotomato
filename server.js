@@ -12,12 +12,12 @@ var EventEmitter = require('events').EventEmitter
 
   , emitter = new EventEmitter()
 
-  , tomato = function () {
+  , work = function () {
         var start = Date.now()
           , interval = setInterval(
                 function () {
                   var countdown = tomatoLength - Math.round((Date.now() - start) / 1000)
-                  emitter.emit('tomato', countdown)
+                  emitter.emit('work', countdown)
                   if (countdown <= 0) {
                     clearInterval(interval)
                     pause()
@@ -26,35 +26,35 @@ var EventEmitter = require('events').EventEmitter
               , 1000
             )
       }
-    , pause = function (callback) {
-        var start = Date.now()
-          , interval = setInterval(
-                function () {
-                  var countdown = pauseLength - Math.round((Date.now() - start) / 1000)
-                  emitter.emit('pause', countdown)
-                  if (countdown <= 0) {
-                    clearInterval(interval)
-                    tomato()
-                  }
+  , pause = function (callback) {
+      var start = Date.now()
+        , interval = setInterval(
+              function () {
+                var countdown = pauseLength - Math.round((Date.now() - start) / 1000)
+                emitter.emit('pause', countdown)
+                if (countdown <= 0) {
+                  clearInterval(interval)
+                  work()
                 }
-              , 1000
-            )
-      }
-    , server
+              }
+            , 1000
+          )
+    }
+  , server
 
 emitter.setMaxListeners(Infinity)
 
 server = require('net').createServer(function (connection) {
   var remoteAddress = connection.remoteAddress
     , onTomato = function (countdown) {
-        connection.write(JSON.stringify({ type: 'tomato', countdown: countdown }) + '\n')
+        connection.write(JSON.stringify({ type: 'work', countdown: countdown }) + '\n')
       }
     , onPause = function (countdown) {
         connection.write(JSON.stringify({ type: 'pause', countdown: countdown }) + '\n')
       }
     , cleanup = function () {
         console.log(chalk.red('Client disconnected ' + remoteAddress))
-        emitter.removeListener('tomato', onTomato)
+        emitter.removeListener('work', onTomato)
         emitter.removeListener('pause', onPause)
         connection.removeListener('end', cleanup)
         connection.removeListener('error', cleanup)
@@ -62,7 +62,7 @@ server = require('net').createServer(function (connection) {
 
   console.log(chalk.green('Client connected ' + remoteAddress))
 
-  emitter.on('tomato', onTomato)
+  emitter.on('work', onTomato)
   emitter.on('pause', onPause)
 
   connection.once('end', cleanup)
@@ -75,4 +75,4 @@ server = require('net').createServer(function (connection) {
   ad.start()
 })
 
-tomato()
+work()

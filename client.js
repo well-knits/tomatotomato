@@ -37,7 +37,7 @@ charm.cursor(false)
 connection.on('data', function (obj) {
   var isRemote = myHostname !== normalizeHostname(obj.host)
 
-  if (obj.type === 'tomato') {
+  if (obj.type === 'work') {
     singleLineOutput('red', format(obj.countdown))
     if (obj.countdown <= 0)
       notifier.notify({ message: 'Let\'s relax for a while!', sound: 'Glass'})

@@ -7,7 +7,7 @@ var reconnect = require('simple-reconnect-ws')
       if (obj.type === 'pause') {
         elm.style.color = 'green'
         elm.innerHTML = obj.countdown;
-      } else if (obj.type === 'tomato') {
+      } else if (obj.type === 'work') {
         elm.style.color = 'red'
         elm.innerHTML = obj.countdown;
       } else if (obj.type === 'close') {

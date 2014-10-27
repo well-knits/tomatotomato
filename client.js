@@ -3,8 +3,7 @@
 var fs = require('fs')
   , path = require('path')
 
-  , Notification = require('node-notifier')
-  , notifier = new Notification()
+  , notifier = require('node-notifier')
 
   , logStream = (function() {
       var dir = path.join(process.env.HOME, '.tomatotomato')

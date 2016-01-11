@@ -4,6 +4,7 @@ var fs = require('fs')
   , path = require('path')
 
   , notifier = require('node-notifier')
+  , say = require('say')
 
   , logStream = (function() {
       var dir = path.join(process.env.HOME, '.tomatotomato')
@@ -39,12 +40,16 @@ connection.on('data', function (obj) {
 
   if (obj.type === 'work') {
     singleLineOutput('red', format(obj.countdown))
-    if (obj.countdown <= 0)
-      notifier.notify({ message: 'Let\'s relax for a while!', sound: 'Glass'})
+    if (obj.countdown <= 0) {
+      notifier.notify({ message: 'Let\'s relax for a while!' })
+      say.speak('Alex', 'Let\'s relax for a while!')
+    }
   } else {
     singleLineOutput('green', format(obj.countdown))
-    if (obj.countdown <= 0)
-      notifier.notify({ message: 'Come on! Let\'s work!', sound: 'Glass'})
+    if (obj.countdown <= 0) {
+      notifier.notify({ message: 'Come on! Let\'s work!' })
+      say.speak('Agnes', 'Come on! Let\'s work!')
+    }
   }
 
   logStream.write(JSON.stringify({

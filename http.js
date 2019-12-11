@@ -25,8 +25,9 @@ var fs = require('fs')
     }).listen(2929, function () {
       console.log('network-http running on http://%s:2929', networkAddress())
     })
+  , wss = new ws.Server({ server: server })
 
-ws.createServer({ server: server }, function (socket) {
+wss.on('connection', function (socket) {
   var send = function (data) { socket.send(JSON.stringify(data)) }
 
   var ondata = function (obj) {

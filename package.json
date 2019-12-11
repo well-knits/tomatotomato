@@ -12,17 +12,17 @@
   "author": "David Björklund <david.bjorklund@gmail.com> (http://davidbjorklund.com/)",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^0.5.1",
-    "charm": "^1.0.0",
-    "mdns": "^2.2.0",
-    "mkdirp": "^0.5.0",
-    "network-address": "0.0.4",
-    "node-notifier": "^4.0.2",
-    "say": "^0.6.0",
+    "chalk": "^3.0.0",
+    "charm": "^1.0.2",
+    "mdns": "^2.5.1",
+    "mkdirp": "^0.5.1",
+    "network-address": "^1.1.2",
+    "node-notifier": "^6.0.0",
+    "say": "^0.16.0",
     "serve-browserify": "^1.1.0",
     "simple-reconnect-ws": "^1.0.0",
-    "split": "^0.3.0",
-    "ws": "^0.4.32"
+    "split": "^1.0.1",
+    "ws": "^7.2.0"
   },
   "devDependencies": {},
   "repository": {
